@@ -1,18 +1,14 @@
-using Avalonia;
-using Avalonia.Markup.Xaml;
+﻿using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using RoutingExample.ViewModels;
 
 namespace RoutingExample.Views;
 
-public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
+public partial class FirstView : ReactiveUserControl<FirstViewModel>
 {
-    public MainWindow()
+    public FirstView()
     {
         InitializeComponent();
-#if DEBUG
-        this.AttachDevTools();
-#endif
     }
 
     private void InitializeComponent()

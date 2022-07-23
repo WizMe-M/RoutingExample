@@ -1,30 +1,19 @@
 using System;
-using Avalonia.Controls;
-using Avalonia.Controls.Templates;
-using RoutingExample.ViewModels;
+using ReactiveUI;
 
-namespace RoutingExample
+namespace RoutingExample;
+
+public class ViewLocator : IViewLocator
 {
-    public class ViewLocator : IDataTemplate
+    public IViewFor? ResolveView<T>(T viewModel, string? contract = null)
     {
-        public IControl Build(object data)
+        var name = viewModel!.GetType().FullName!.Replace("ViewModel", "View");
+        var type = Type.GetType(name);
+        if (type != null)
         {
-            var name = data.GetType().FullName!.Replace("ViewModel", "View");
-            var type = Type.GetType(name);
-
-            if (type != null)
-            {
-                return (Control)Activator.CreateInstance(type)!;
-            }
-            else
-            {
-                return new TextBlock { Text = "Not Found: " + name };
-            }
+            return Activator.CreateInstance(type) as IViewFor;
         }
 
-        public bool Match(object data)
-        {
-            return data is ViewModelBase;
-        }
+        return null;
     }
 }

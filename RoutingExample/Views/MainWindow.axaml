@@ -3,15 +3,42 @@
         xmlns:vm="using:RoutingExample.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
+        xmlns:root="clr-namespace:RoutingExample"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RoutingExample.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="RoutingExample">
-
     <Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="Width" Value="160" />
+            <Setter Property="Margin" Value="20" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Styles>
 
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Bottom" Margin="10" HorizontalAlignment="Center"
+                   Text="{Binding Router.NavigationStack.Count,
+                   StringFormat={}Navigation stack count: {0}}" />
+        
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="20 10" HorizontalAlignment="Center">
+            <Button Content="Go to next view" Command="{Binding GoNext}" />
+            <Button Content="Go to prev view" Command="{Binding GoBack}" />
+        </StackPanel>
+        
+        <rxui:RoutedViewHost Router="{Binding Router}">
+            <rxui:RoutedViewHost.ViewLocator>
+                <root:ViewLocator />
+            </rxui:RoutedViewHost.ViewLocator>
+            <rxui:RoutedViewHost.DefaultContent>
+                <TextBlock Text="{Binding Default}" FontSize="16" FontWeight="Black"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </rxui:RoutedViewHost.DefaultContent>
+        </rxui:RoutedViewHost>
+    </DockPanel>
 </Window>
