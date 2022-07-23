@@ -5,9 +5,11 @@ namespace RoutingExample;
 
 public class ViewLocator : IViewLocator
 {
-    public IViewFor? ResolveView<T>(T viewModel, string? contract = null)
+    public IViewFor? ResolveView<T>(T? viewModel, string? contract = null)
     {
-        var name = viewModel!.GetType().FullName!.Replace("ViewModel", "View");
+        if (viewModel is null) return null;
+
+        var name = viewModel.GetType().FullName!.Replace("ViewModel", "View");
         var type = Type.GetType(name);
         if (type != null)
         {

@@ -11,6 +11,10 @@
     <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock DockPanel.Dock="Top" Text="Hi, I'm the first view!" FontSize="14"
                    HorizontalAlignment="Center" Margin="10" />
+        
+        <TextBox DockPanel.Dock="Bottom" Text="{Binding SearchText}" Watermark="Input something..."
+                 />
+        
         <TextBlock Text="{Binding UrlPathSegment, StringFormat={}UrlPath \= \'{0}\'}"
                    FontSize="10" HorizontalAlignment="Center" />
     </DockPanel>

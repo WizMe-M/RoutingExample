@@ -1,15 +1,18 @@
-﻿using System;
+﻿using System.Runtime.Serialization;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace RoutingExample.ViewModels;
 
+[DataContract]
 public class FirstViewModel : ViewModelBase, IRoutableViewModel
 {
-    // Reference to IScreen that owns the routable view model.
     public IScreen HostScreen { get; }
+    public string UrlPathSegment => "/first_view";
 
-    // Unique identifier for the routable view model.
-    public string? UrlPathSegment { get; } = Guid.NewGuid().ToString();
+    [DataMember]
+    [Reactive]
+    public string SearchText { get; set; }
 
     public FirstViewModel(IScreen hostScreen) => HostScreen = hostScreen;
 }
